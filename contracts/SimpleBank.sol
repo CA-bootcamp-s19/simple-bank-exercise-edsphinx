@@ -53,7 +53,7 @@ contract SimpleBank {
     // Added so ether sent to this contract is reverted if the contract fails
     // otherwise, the sender's money is transferred to contract
     function() external payable {
-        revert();
+        revert("Error message");
     }
 
     /// @notice Get balance
@@ -100,7 +100,7 @@ contract SimpleBank {
            Subtract the amount from the sender's balance, and try to send that amount of ether
            to the user attempting to withdraw.
            return the user's balance.*/
-           require(withdrawAmount <= balances[msg.sender]);
+           require(withdrawAmount <= balances[msg.sender],"Not enough balance");
            msg.sender.transfer(withdrawAmount);
            balances[msg.sender] -= withdrawAmount;
            emit LogWithdrawal(msg.sender, withdrawAmount, balances[msg.sender]);
